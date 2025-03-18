@@ -1,0 +1,51 @@
+-----1.soru------
+
+SELECT COUNT(*) AS null_kayit_sayisi
+FROM invoice
+WHERE (invoice_date IS NULL 
+OR billing_address IS NULL 
+OR billing_city IS NULL 
+OR billing_state IS NULL 
+OR billing_country IS NULL 
+OR billingpostal_code IS NULL 
+OR total IS NULL);
+
+-- total rows=209
+--sütunlardaki null değerleri bulabilmek için is null operatörü kullandım.
+
+
+
+-----2.soru--------
+
+SELECT 
+    customer_id,
+    invoice_date,
+    billing_address,
+    billing_city,
+    billing_state,
+    billing_country,
+    billingpostal_code,
+    total AS old_total,
+    total * 2 AS new_total
+FROM 
+    invoice
+ORDER BY 
+    new_total DESC;
+
+--total kolonunu old total olarak değiştirdim ve *2 kullanarak 2 katını alıp new total kolonunu oluşturdum.
+--DESC ile büyükten küçüğe sıraladım.
+
+
+
+-----3.soru--------
+
+SELECT billing_address,
+      LEFT(billing_address,3) as f1,
+	  RIGHT(billing_address,4) as f2,
+	  CONCAT(LEFT(billing_address,3), '',RIGHT(billing_address,4) ) as acik_adres
+FROM invoice
+WHERE DATE_TRUNC('month', invoice_date) =DATE_TRUNC('month',TIMESTAMP'2013-08-01');
+
+--billing address kolonunun ilk 3 ve son 4 karakterini alıp yeni bir kolona (acik adres) atar.
+--sadece 2013 yılı ağustos ayının verileri olarak filtreledim.
+
